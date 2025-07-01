@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package xraymanager.v1;
+
+option go_package = "xraymanager/v1;xraymanager";
+
+// Общий ответ
+message StatusResponse {
+  string status = 1; // "ok" или "error"
+  string error = 2;  // описание ошибки, если status == "error"
+}
+
+// --- create config / regenerate keys ---
+
+message Empty {}
+
+message PublicKeyResponse {
+  string public_key = 1;
+}
+
+// --- add user / remove user ---
+
+message AddUserRequest {
+  string short_id = 1;
+  string uuid = 2;
+  string account_id = 3;
+}
+
+message RemoveUserRequest {
+  string account_id = 1;
+}
+
+// --- change dest ---
+
+message ChangeDestRequest {
+  string dest = 1;
+  repeated string server_names = 2;
+}
+
+// --- сервис ---
+
+service XrayManager {
+  // create config
+  rpc CreateConfig(Empty) returns (PublicKeyResponse);
+
+  // regenerate keys
+  rpc RegenerateKeys(Empty) returns (PublicKeyResponse);
+
+  // add user
+  rpc AddUser(AddUserRequest) returns (StatusResponse);
+
+  // remove user
+  rpc RemoveUser(RemoveUserRequest) returns (StatusResponse);
+
+  // stop xray
+  rpc StopXray(Empty) returns (StatusResponse);
+
+  // start xray
+  rpc StartXray(Empty) returns (StatusResponse);
+
+  // change destination
+  rpc ChangeDest(ChangeDestRequest) returns (StatusResponse);
+}
