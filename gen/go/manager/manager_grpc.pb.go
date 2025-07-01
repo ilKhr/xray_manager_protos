@@ -4,11 +4,10 @@
 // - protoc             v3.6.1
 // source: manager/manager.proto
 
-package xraymanager
+package manager
 
 import (
 	context "context"
-
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -20,13 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	XrayManager_CreateConfig_FullMethodName   = "/xraymanager.v1.XrayManager/CreateConfig"
-	XrayManager_RegenerateKeys_FullMethodName = "/xraymanager.v1.XrayManager/RegenerateKeys"
-	XrayManager_AddUser_FullMethodName        = "/xraymanager.v1.XrayManager/AddUser"
-	XrayManager_RemoveUser_FullMethodName     = "/xraymanager.v1.XrayManager/RemoveUser"
-	XrayManager_StopXray_FullMethodName       = "/xraymanager.v1.XrayManager/StopXray"
-	XrayManager_StartXray_FullMethodName      = "/xraymanager.v1.XrayManager/StartXray"
-	XrayManager_ChangeDest_FullMethodName     = "/xraymanager.v1.XrayManager/ChangeDest"
+	XrayManager_CreateConfig_FullMethodName   = "/grpc.manager.v1.XrayManager/CreateConfig"
+	XrayManager_RegenerateKeys_FullMethodName = "/grpc.manager.v1.XrayManager/RegenerateKeys"
+	XrayManager_AddUser_FullMethodName        = "/grpc.manager.v1.XrayManager/AddUser"
+	XrayManager_RemoveUser_FullMethodName     = "/grpc.manager.v1.XrayManager/RemoveUser"
+	XrayManager_StopXray_FullMethodName       = "/grpc.manager.v1.XrayManager/StopXray"
+	XrayManager_StartXray_FullMethodName      = "/grpc.manager.v1.XrayManager/StartXray"
+	XrayManager_ChangeDest_FullMethodName     = "/grpc.manager.v1.XrayManager/ChangeDest"
 )
 
 // XrayManagerClient is the client API for XrayManager service.
@@ -327,7 +326,7 @@ func _XrayManager_ChangeDest_Handler(srv interface{}, ctx context.Context, dec f
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var XrayManager_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "xraymanager.v1.XrayManager",
+	ServiceName: "grpc.manager.v1.XrayManager",
 	HandlerType: (*XrayManagerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
