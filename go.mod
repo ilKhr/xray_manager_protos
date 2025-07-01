@@ -1,4 +1,4 @@
-module github.com/ilKhr/xray_manager_protos
+module github.com/ilkhr/xray_manager_protos
 
 go 1.24.0
 
