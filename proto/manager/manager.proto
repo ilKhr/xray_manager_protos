@@ -27,8 +27,7 @@ message AddUserRequest {
 }
 
 message RemoveUserRequest {
-  string short_id = 1;
-  string uuid = 2;
+  string account_id = 1;
 }
 
 // --- change dest ---
