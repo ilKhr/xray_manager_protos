@@ -26,6 +26,7 @@ const (
 	XrayManager_StopXray_FullMethodName       = "/grpc.manager.v1.XrayManager/StopXray"
 	XrayManager_StartXray_FullMethodName      = "/grpc.manager.v1.XrayManager/StartXray"
 	XrayManager_ChangeDest_FullMethodName     = "/grpc.manager.v1.XrayManager/ChangeDest"
+	XrayManager_Link_FullMethodName           = "/grpc.manager.v1.XrayManager/Link"
 )
 
 // XrayManagerClient is the client API for XrayManager service.
@@ -46,6 +47,8 @@ type XrayManagerClient interface {
 	StartXray(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*StatusResponse, error)
 	// change destination
 	ChangeDest(ctx context.Context, in *ChangeDestRequest, opts ...grpc.CallOption) (*StatusResponse, error)
+	// get link
+	Link(ctx context.Context, in *LinkRequest, opts ...grpc.CallOption) (*LinkResponse, error)
 }
 
 type xrayManagerClient struct {
@@ -126,6 +129,16 @@ func (c *xrayManagerClient) ChangeDest(ctx context.Context, in *ChangeDestReques
 	return out, nil
 }
 
+func (c *xrayManagerClient) Link(ctx context.Context, in *LinkRequest, opts ...grpc.CallOption) (*LinkResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LinkResponse)
+	err := c.cc.Invoke(ctx, XrayManager_Link_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // XrayManagerServer is the server API for XrayManager service.
 // All implementations must embed UnimplementedXrayManagerServer
 // for forward compatibility.
@@ -144,6 +157,8 @@ type XrayManagerServer interface {
 	StartXray(context.Context, *Empty) (*StatusResponse, error)
 	// change destination
 	ChangeDest(context.Context, *ChangeDestRequest) (*StatusResponse, error)
+	// get link
+	Link(context.Context, *LinkRequest) (*LinkResponse, error)
 	mustEmbedUnimplementedXrayManagerServer()
 }
 
@@ -174,6 +189,9 @@ func (UnimplementedXrayManagerServer) StartXray(context.Context, *Empty) (*Statu
 }
 func (UnimplementedXrayManagerServer) ChangeDest(context.Context, *ChangeDestRequest) (*StatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeDest not implemented")
+}
+func (UnimplementedXrayManagerServer) Link(context.Context, *LinkRequest) (*LinkResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Link not implemented")
 }
 func (UnimplementedXrayManagerServer) mustEmbedUnimplementedXrayManagerServer() {}
 func (UnimplementedXrayManagerServer) testEmbeddedByValue()                     {}
@@ -322,6 +340,24 @@ func _XrayManager_ChangeDest_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _XrayManager_Link_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LinkRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(XrayManagerServer).Link(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: XrayManager_Link_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(XrayManagerServer).Link(ctx, req.(*LinkRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // XrayManager_ServiceDesc is the grpc.ServiceDesc for XrayManager service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -356,6 +392,10 @@ var XrayManager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ChangeDest",
 			Handler:    _XrayManager_ChangeDest_Handler,
+		},
+		{
+			MethodName: "Link",
+			Handler:    _XrayManager_Link_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

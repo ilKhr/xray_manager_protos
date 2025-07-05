@@ -37,6 +37,16 @@ message ChangeDestRequest {
   repeated string server_names = 2;
 }
 
+// --- link ---
+
+message LinkRequest {
+  string account_id = 1;
+}
+
+message LinkResponse {
+  string link = 1;
+}
+
 // --- сервис ---
 
 service XrayManager {
@@ -60,4 +70,7 @@ service XrayManager {
 
   // change destination
   rpc ChangeDest(ChangeDestRequest) returns (StatusResponse);
+
+  // get link
+  rpc Link(LinkRequest) returns (LinkResponse);
 }
